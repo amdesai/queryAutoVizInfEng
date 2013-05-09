@@ -25,6 +25,7 @@ include_once 'db_config.php';
         <br/>
         <div style="height:100%">
             <div id="leftColumn">
+                Here
                 <div id="fieldList">
                     <?php
                     $tablesSchema = execute("select * from information_schema.columns where table_schema = '$DBName' order by table_name,ordinal_position");
