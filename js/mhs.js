@@ -37,6 +37,47 @@ $(document).ready(function(){
             }
         }
     });
+	$("#pickField").dialog({
+        autoOpen:false,
+        modal:true,
+        width:300,
+        buttons:{
+            Ok:function(){
+                $(this).dialog("close");
+//                alert(joinField);
+            }
+        }
+    });
+	$("#pickFieldBox").click(function(){
+		$("#pickFieldBox").animate({
+			right:'20%',
+			top: '-200px',
+			width:'70%',
+			height: '35%'
+		});
+	}); 
+	$("#pickAField").click(function(){
+		$("#pickFieldBox").animate({
+			right:'20%',
+			top: '-200px',
+			width:'70%',
+			height: '35%'
+		});
+	}); 
+	$("#editField").click(function(){
+		$("#pickFieldBox").animate({
+			right:'20%',
+			top: '-200px',
+			width:'70%',
+			height: '35%'
+		});
+	}); 
+	$("#exitIcon").click(function(){
+		$("#pickFieldBox").animate({
+			right:'10%',
+			width:'26%'
+		});
+	}); 
 });
 
 function loadjQueryHandlerNew(){
@@ -358,7 +399,7 @@ function addStats(str,index){
     $.ajax({
         type:"POST",
         url:"db_calls.php",
-        data:"task=generateStatistics"+selected+"&joinField="+joinField
+        data:"task=generateStatistics&chooseField="+$("#chooseField").val()+selected+"&joinField="+joinField
     }).done(function ( response ) {
         //alert(response);
         $("#stats").html(response);
@@ -456,5 +497,18 @@ function readCSV(){
             loadjQueryHandler();
         }
     })
+	
+	// gets the value for which field the user selects to display 
+	function getFieldValue() {
+		var element = document.getElementByID('field');
+		var field = element.value;
+		
+	}
+	
+	function editFieldValue() {
+		//$("#pickField").dialog("open");
+
+	}
+
 }   
  

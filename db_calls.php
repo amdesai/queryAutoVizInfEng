@@ -9,6 +9,7 @@ if (isset($_POST['task'])) {
 } else {
     $task = "nothing";
 }
+
 if ($task == "getUniqueFieldValues") {
     $table = $_POST['table'];
     $field = $_POST['field'];
@@ -36,6 +37,7 @@ if ($task == "getUniqueFieldValues") {
 } else if ($task = "generateStatistics") {
     $names = explode("|", $_POST["name"]);
     $joinField = $_POST["joinField"];
+	$chooseField = $_POST['chooseField'];
     $prevTable = "";
     $queryFrom = "";
     $queryWhere = "";
@@ -62,16 +64,16 @@ if ($task == "getUniqueFieldValues") {
         $queryWhere.= "$table.`$field` = '$value' ";
         $prevTable = $table;
     }
-    $joinQuery = "SELECT $prevTable.Gender FROM $queryFrom WHERE $queryWhere";
+    $joinQuery = "SELECT $prevTable.$chooseField FROM $queryFrom WHERE $queryWhere";
     
-    $mainQuery = "SELECT temp.Gender, COUNT(0) as count FROM ($joinQuery) AS temp GROUP BY temp.Gender";
+    $mainQuery = "SELECT temp.$chooseField, COUNT(0) as count FROM ($joinQuery) AS temp GROUP BY temp.$chooseField";
 //    echo $mainQuery;
     $result = execute($mainQuery);
     $count = 0;
     $data = "";
     foreach ($result as $index => $row) {
         $count = $count + $row["count"];
-        $data .= '{"label":"' . $row["Gender"] . '","value":"' . $row["count"] . '"}';
+        $data .= '{"label":"' . $row[$chooseField] . '","value":"' . $row["count"] . '"}';
         if ($index != count($result) - 1)
             $data .= ',';
     }

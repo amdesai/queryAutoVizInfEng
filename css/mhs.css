@@ -223,3 +223,15 @@ left: 21%; /* Comfortable padding for scroll bar in leftcolumn */
 width: 75%; 
 height:100%
 }
+#pickFieldBox {
+	width: 225px;
+	border: 3px #005BE0 solid;
+	float: right;
+	height: 100px;
+	text-align: center;
+	font-size: 60%;
+	position: relative;
+}
+#exitIcon { 
+	float: right;
+}

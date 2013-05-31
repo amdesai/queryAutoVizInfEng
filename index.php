@@ -13,10 +13,24 @@ include_once 'db_config.php';
         <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
         <script type="text/javascript" src="js/mhs.js"></script>
         <script type="text/javascript" src="js/d3.v3.min.js"></script>
+		<script>
+		$(function() {
+			$("#dialog").dialog({
+				autoOpen: false,
+				
+			})
+			$("#openDB").click(function() {
+				$("#dialog").dialog("open");
+			});
+			<!--$("#pickAField").click(function() { -->
+				<!-- $("#pickField").dialog("open"); -->
+			<!-- }); -->
+			<!-- $("#editField").click(function() { -->
+			<!--	$("#pickField").dialog("open");-->
+			<!-- }); -->
+		});
+		</script>
 
-        <script type="text/javascript">
-
-        </script>
     </head>
 
     <body height="100%">
@@ -25,11 +39,30 @@ include_once 'db_config.php';
         <br/>
         <div style="height:100%">
             <div id="leftColumn">
-                Here
+				<?php
+					$strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='medical';";
+					$result = execute($strSQL);
+				?>
+				<ul class='options' >
+					<div><a href="#" id="pickAField">Pick a Field</a> <span><img id="editField" src="img/Pencil-icon.png"/></span>
+				</ul>  
+					<!-- <div><strong>Pick a Field</strong>
+						<select id="chooseField" name="chooseField" >
+							<option value = "RiskCategoryCD">RiskCategoryCD</option>
+							<option value = "RiskCat">RiskCat</option>
+							<option value = "PatientTypeCD">PatientTypeCD</option>
+							<option value = "DischargeFollowupCategoryCD">DischargeFollowupCategoryCD</option>
+							<option value = "AverageInpatientBPCategoryCD">AverageInpatientBPCategoryCD</option>
+							<option value = "EjectionFractionCategoryCD">EjectionFractionCategoryCD</option>
+							<option value = "EjectionFractionVAL">EjectionFractionVAL</option>
+							<option value = "Gender" selected="selected">Gender</option>
+							<option value = "Age">Age</option>
+						</select> 
+					</div> -->
                 <div id="fieldList">
                     <?php
                     $tablesSchema = execute("select * from information_schema.columns where table_schema = '$DBName' order by table_name,ordinal_position");
-                    ?>
+                   ?>
                     <ul>
 
                         <?php
@@ -57,7 +90,21 @@ include_once 'db_config.php';
                         <?php endforeach; ?>
                         <?php echo "<li>$title<ul>$ui</ul><li>"; ?>    
                     </ul>
-                </div>
+				</div>
+				<button id="openDB">Pick Database Connection</button>
+				<div id="dialog" title="Enter Database Information">
+					<p class="validateTips">All form fields are required.</p>
+					<form>
+						<fieldset>
+						<label for="name">Database Name:</label> </br>
+						<input type="text" name="DBName" id="DBName" class="text ui-widget-content ui-corner-all" /> </br>
+						<label for="username">Database Username:</label> </br>
+						<input type="text" name="DBUser" id="DBUser" value="" class="text ui-widget-content ui-corner-all" /> </br>
+						<label for="password">Database Password:</label> </br>
+						<input type="password" name="DBPassword" id="DBPassword" value="" class="text ui-widget-content ui-corner-all" /> </br>
+						</fieldset>
+					</form>
+				</div>
                 <hr class="panelbreak" />
                 <div id="segments">
                     <h3>My Segments</h3>
@@ -99,14 +146,50 @@ include_once 'db_config.php';
                         <div id="stats" style="width: 50%" class="dashed stats">
 
                         </div>
+						<div id="pickFieldBox" title="Pick Field Box">
+							<p>Pick a Field from the Database: <span><img id="exitIcon" src="img/exit-icon.png"/></span></p>
+							<select id="chooseFieldBox" name="chooseFieldBox" >
+								<?php foreach ($result as $row): ?>
+									<?php 
+										if ($row["COLUMN_NAME"] == 'Gender') { 
+									?>
+									<option value = <?= $row["COLUMN_NAME"] ?> selected="selected"> <?= $row["COLUMN_NAME"] ?> </option>
+									<?php 
+										} else if ($row["COLUMN_NAME"] != 'seq') { 
+									?>
+									<option value = <?= $row["COLUMN_NAME"] ?>> <?= $row["COLUMN_NAME"] ?> </option>
+									<?php
+										}
+									?>
+								<?php endforeach; ?>
+							</select>
+						</div>
                         <div style="clear: both"></div>
+						
                     </div>
+					<div id="pickField" title="Pick Field">
+						<p class="validateTips">Pick a Field from the Database:</p>
+						<select id="chooseField" name="chooseField" >
+							<?php foreach ($result as $row): ?>
+								<?php 
+									if ($row["COLUMN_NAME"] == 'Gender') { 
+								?>
+								<option value = <?= $row["COLUMN_NAME"] ?> selected="selected"> <?= $row["COLUMN_NAME"] ?> </option>
+								<?php 
+									} else if ($row["COLUMN_NAME"] != 'seq') { 
+								?>
+								<option value = <?= $row["COLUMN_NAME"] ?>> <?= $row["COLUMN_NAME"] ?> </option>
+								<?php
+									}
+								?>
+							<?php endforeach; ?>
+						</select>
+					</div>
                     <div id="tabs-2">
-
+					
                     </div>
                     <div id="tabs-3">
-
-
+						
                     </div>
                 </div>
             </div>
