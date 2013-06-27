@@ -235,3 +235,28 @@ height:100%
 #exitIcon { 
 	float: right;
 }
+#expand {
+	float: left;
+}
+#editField{
+	color: #0404B4;
+	text-decoration: underline;
+	margin-left: 0px;
+}
+#editField:hover{
+	text-decoration: none;
+}
+#fieldTextBox {
+	margin-bottom: 2em;
+}
+.slide {
+	position: relative;
+}
+.slide #pickFieldBox{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+#fieldInfo p{
+	margin-bottom: 5px
+}

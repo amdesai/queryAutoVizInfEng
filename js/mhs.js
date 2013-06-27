@@ -37,6 +37,20 @@ $(document).ready(function(){
             }
         }
     });
+	/*
+	$('#editField').click(function() {
+		var $lefty = $('#pickFieldBox');
+		$lefty.animate({
+			left: parseInt($lefty.css('left'),10) == 0 ?
+			-$lefty.outerWidth() :
+			0
+		});
+	});
+	*/
+	$('#editField').click(function() {
+		$('#pickFieldBox').toggle('slide', {direction: 'right'}, 1000);
+	});
+	/*
 	$("#pickField").dialog({
         autoOpen:false,
         modal:true,
@@ -47,7 +61,7 @@ $(document).ready(function(){
 //                alert(joinField);
             }
         }
-    });
+    });*/
 	$("#pickFieldBox").click(function(){
 		$("#pickFieldBox").animate({
 			right:'20%',
@@ -56,14 +70,7 @@ $(document).ready(function(){
 			height: '35%'
 		});
 	}); 
-	$("#pickAField").click(function(){
-		$("#pickFieldBox").animate({
-			right:'20%',
-			top: '-200px',
-			width:'70%',
-			height: '35%'
-		});
-	}); 
+	/*
 	$("#editField").click(function(){
 		$("#pickFieldBox").animate({
 			right:'20%',
@@ -77,7 +84,7 @@ $(document).ready(function(){
 			right:'10%',
 			width:'26%'
 		});
-	}); 
+	}); */
 });
 
 function loadjQueryHandlerNew(){

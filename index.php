@@ -22,9 +22,9 @@ include_once 'db_config.php';
 			$("#openDB").click(function() {
 				$("#dialog").dialog("open");
 			});
-			<!--$("#pickAField").click(function() { -->
-				<!-- $("#pickField").dialog("open"); -->
-			<!-- }); -->
+			$("#pickAField").click(function() { 
+				 $("#pickField").dialog("open"); 
+			 });
 			<!-- $("#editField").click(function() { -->
 			<!--	$("#pickField").dialog("open");-->
 			<!-- }); -->
@@ -43,9 +43,12 @@ include_once 'db_config.php';
 					$strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='medical';";
 					$result = execute($strSQL);
 				?>
-				<ul class='options' >
-					<div><a href="#" id="pickAField">Pick a Field</a> <span><img id="editField" src="img/Pencil-icon.png"/></span>
-				</ul>  
+				<div id="fieldInfo">
+					<p>Field:</p>
+					<input id="fieldTextBox" type="text" disabled="disabled" value="Gender"></input>
+					<a id="editField">edit</a>
+					<!--<button id="editField">edit</button>-->
+				</div>  
 					<!-- <div><strong>Pick a Field</strong>
 						<select id="chooseField" name="chooseField" >
 							<option value = "RiskCategoryCD">RiskCategoryCD</option>
@@ -145,9 +148,10 @@ include_once 'db_config.php';
                         </div> 
                         <div id="stats" style="width: 50%" class="dashed stats">
 
-                        </div>
+                        </div class="slide">
 						<div id="pickFieldBox" title="Pick Field Box">
 							<p>Pick a Field from the Database: <span><img id="exitIcon" src="img/exit-icon.png"/></span></p>
+							<span><img id="expand" src="img/expand-icon.png"/></span>
 							<select id="chooseFieldBox" name="chooseFieldBox" >
 								<?php foreach ($result as $row): ?>
 									<?php 
@@ -167,6 +171,7 @@ include_once 'db_config.php';
                         <div style="clear: both"></div>
 						
                     </div>
+					<!--
 					<div id="pickField" title="Pick Field">
 						<p class="validateTips">Pick a Field from the Database:</p>
 						<select id="chooseField" name="chooseField" >
@@ -185,6 +190,7 @@ include_once 'db_config.php';
 							<?php endforeach; ?>
 						</select>
 					</div>
+					-->
                     <div id="tabs-2">
 					
                     </div>
