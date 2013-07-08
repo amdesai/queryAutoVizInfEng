@@ -33,59 +33,29 @@ $(document).ready(function(){
         buttons:{
             Ok:function(){
                 $(this).dialog("close");
-//                alert(joinField);
+            //                alert(joinField);
             }
         }
     });
-	/*
-	$('#editField').click(function() {
-		var $lefty = $('#pickFieldBox');
-		$lefty.animate({
-			left: parseInt($lefty.css('left'),10) == 0 ?
-			-$lefty.outerWidth() :
-			0
-		});
-	});
-	*/
-	$('#editField').click(function() {
-		$('#pickFieldBox').toggle('slide', {direction: 'right'}, 1000);
-	});
-	/*
-	$("#pickField").dialog({
-        autoOpen:false,
-        modal:true,
-        width:300,
-        buttons:{
-            Ok:function(){
-                $(this).dialog("close");
-//                alert(joinField);
-            }
-        }
-    });*/
-	$("#pickFieldBox").click(function(){
-		$("#pickFieldBox").animate({
-			right:'20%',
-			top: '-200px',
-			width:'70%',
-			height: '35%'
-		});
-	}); 
-	/*
-	$("#editField").click(function(){
-		$("#pickFieldBox").animate({
-			right:'20%',
-			top: '-200px',
-			width:'70%',
-			height: '35%'
-		});
-	}); 
-	$("#exitIcon").click(function(){
-		$("#pickFieldBox").animate({
-			right:'10%',
-			width:'26%'
-		});
-	}); */
+    $('#editField').click(function() {
+        toggleOptions();
+    });
+    
+    
+//    $("#pickFieldBox").click(function(){
+//        $("#pickFieldBox").animate({
+//            right:'20%',
+//            top: '-200px',
+//            width:'70%',
+//            height: '35%'
+//        });
+//    }); 
+
 });
+function toggleOptions()
+{
+    $("#options").toggle('slide', {direction: 'right'}, 1000);
+}
 
 function loadjQueryHandlerNew(){
     $( "#drop" ).sortable({
@@ -332,6 +302,10 @@ function sortUniqueAndCount(arr){
     return data;
 }
 
+function updateVisualizationField(t){
+    $("#fieldTextBox").val($(t).val());
+}
+
 function drawChart(){
     var w = 300,                        //width
     h = 300,                            //height
@@ -406,7 +380,7 @@ function addStats(str,index){
     $.ajax({
         type:"POST",
         url:"db_calls.php",
-        data:"task=generateStatistics&chooseField="+$("#chooseField").val()+selected+"&joinField="+joinField
+        data:"task=generateStatistics&chooseField="+$("#fieldTextBox").val()+selected+"&joinField="+joinField
     }).done(function ( response ) {
         //alert(response);
         $("#stats").html(response);
@@ -505,17 +479,17 @@ function readCSV(){
         }
     })
 	
-	// gets the value for which field the user selects to display 
-	function getFieldValue() {
-		var element = document.getElementByID('field');
-		var field = element.value;
+    // gets the value for which field the user selects to display 
+    function getFieldValue() {
+        var element = document.getElementByID('field');
+        var field = element.value;
 		
-	}
+    }
 	
-	function editFieldValue() {
-		//$("#pickField").dialog("open");
+    function editFieldValue() {
+    //$("#pickField").dialog("open");
 
-	}
+    }
 
 }   
  

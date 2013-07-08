@@ -1,14 +1,14 @@
 body{
-	font-family: Verdana, Arial, sans-serif;
-  height:100%
+    font-family: Verdana, Arial, sans-serif;
+    height:100%
 
-	/*Disable accidental highlighting*/	
-/*	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;*/
+        /*Disable accidental highlighting*/	
+        /*	-webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;*/
 }
 #fieldList div,#drop div{
     background: #6BABFF; /* Old browsers */
@@ -26,11 +26,11 @@ body{
     padding: 3px 12px 3px 8px;
     text-decoration: none;
     border-bottom: 1px solid #fff;
-	font-size: 15px;
+    font-size: 15px;
     font-weight: bold;
 }
 .ui-draggable{
-	font-size: 12px;
+    font-size: 12px;
 }
 #fieldList div{
     width: 95%;
@@ -41,7 +41,7 @@ dark #005BE0 old #A3A3A3
 */
 
 .systemLinks {
-	color: #005BE0;
+    color: #005BE0;
 }
 
 #fieldList{
@@ -83,7 +83,7 @@ dark #005BE0 old #A3A3A3
     border: 1px dashed #CCCCCC;
     float: left;
     margin-left: 10px;
-	min-height:70%
+    min-height:70%
 }
 #drop{
     min-height:90%;
@@ -94,7 +94,7 @@ dark #005BE0 old #A3A3A3
     /* border:1px solid black;*/
 }
 #tab-1{
-    
+
 }
 
 .container {
@@ -194,13 +194,13 @@ dark #005BE0 old #A3A3A3
     font-size: 10pt;
 }
 #segments{
-	min-height: 10%;
-	margin-left: 10px;
-	margin-bottom: 10px;
+    min-height: 10%;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 hr.panelbreak {
-	border: 0;
+    border: 0;
     height: 1px;
     background: #333;
     background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc); 
@@ -209,54 +209,82 @@ hr.panelbreak {
     background-image:      -o-linear-gradient(left, #ccc, #333, #ccc); 
 }
 #segments ul li{
-	list-style: none;
-	color: #005BE0;
+    list-style: none;
+    color: #005BE0;
 }
 #leftColumn{
-width: 20%;
-height: 75%;
-position:absolute;
+    width: 20%;
+    height: 75%;
+    position:absolute;
 }
 #rightContent{
-position: absolute;
-left: 21%; /* Comfortable padding for scroll bar in leftcolumn */
-width: 75%; 
-height:100%
+    position: absolute;
+    left: 21%; /* Comfortable padding for scroll bar in leftcolumn */
+    width: 75%; 
+    height:100%
 }
 #pickFieldBox {
-	width: 225px;
-	border: 3px #005BE0 solid;
-	float: right;
-	height: 100px;
-	text-align: center;
-	font-size: 60%;
-	position: relative;
+    width: 225px;
+    border: 3px #005BE0 solid;
+    float: right;
+    height: 100px;
+    text-align: center;
+    font-size: 60%;
+    position: relative;
 }
 #exitIcon { 
-	float: right;
+    float: right;
 }
 #expand {
-	float: left;
+    float: left;
 }
 #editField{
-	color: #0404B4;
-	text-decoration: underline;
-	margin-left: 0px;
+    color: #0404B4;
+    text-decoration: underline;
+    margin-left: 0px;
 }
 #editField:hover{
-	text-decoration: none;
+    text-decoration: none;
 }
 #fieldTextBox {
-	margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 .slide {
-	position: relative;
+    position: relative;
 }
 .slide #pickFieldBox{
-	position: absolute;
-	right: 0;
-	bottom: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 #fieldInfo p{
-	margin-bottom: 5px
+    margin-bottom: 5px
+}
+
+#options{
+    background: #005BE0;
+    color: white;
+    height: 100%;
+    width: 300px;
+    display:block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 50;
+    display: none;
+}
+
+.mark{
+/*    background: #B2C8E6;*/
+    color: white;
+    width: 25px;
+    display:block;
+    position: absolute;
+    top: 50%;
+    right: 305px;
+    z-index: 50;
+}
+
+.options_table{
+    padding: 5px;
 }
