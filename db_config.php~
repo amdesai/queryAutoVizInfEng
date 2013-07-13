@@ -3,7 +3,7 @@
 	$DBLink = "localhost";
 	$DBName = "medical";
 	$DBUser = "root";
-	$DBPswd = "root";
+	$DBPswd = "";
 	$col = "";
 	function execute($sql)//,$DBLink,$DBName,$DBUser,$DBPswd)
 	{	

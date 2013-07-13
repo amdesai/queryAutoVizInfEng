@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
 <?php
 include_once 'db_config.php';
 ?>
@@ -40,9 +40,9 @@ include_once 'db_config.php';
         <div style="height:100%">
             <div id="leftColumn">
                 <div id="fieldInfo">
-                    <p>Visualization Field:</p>
+                    <p>Field:</p>
                     <input id="fieldTextBox" type="text" disabled="disabled" value="Gender"></input>
-                    <a id="editField">Change</a>
+                    <a id="editField">edit</a>
                 </div>  
                 <div id="fieldList">
                     <?php

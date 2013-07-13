@@ -288,3 +288,14 @@ hr.panelbreak {
 .options_table{
     padding: 5px;
 }
+
+#editField{
+    text-decoration: none;
+    color: #414141;
+    font-size: 10pt;
+    cursor: pointer;
+}
+
+#editField:hover{
+    text-decoration: underline;
+}
