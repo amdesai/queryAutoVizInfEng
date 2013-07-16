@@ -1,9 +1,9 @@
 <?php
 	ob_start();
 	$DBLink = "localhost";
-	$DBName = "opsi";
+	$DBName = "medical";
 	$DBUser = "root";
-	$DBPswd = "roar77";
+	$DBPswd = "";
 	$col = "";
 	function execute($sql)//,$DBLink,$DBName,$DBUser,$DBPswd)
 	{	
