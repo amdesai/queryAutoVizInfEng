@@ -5,7 +5,7 @@ include_once 'db_config.php';
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>MHS Query Builder</title>
+        <title>Generic Query Builder</title>
         <link rel="shortcut icon" href="../favicon.ico" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.9.2.custom.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/mhs.css"/>
@@ -34,7 +34,9 @@ include_once 'db_config.php';
     </head>
 
     <body height="100%">
-        <div><span><img src="img/logo_multicare.jpg"/></span>&nbsp;<span style="position: absolute;right: 10px"><img src="img/Ctr.Web.Data.Sci_uw_Inst.Tech.png"/></span></div>
+        <div><span><!-- <img src="img/logo_multicare.jpg"/> -->QUERY BUILDER LOGO</span>
+        &nbsp;
+        <span style="position: absolute;right: 10px"><!--<img src="img/Ctr.Web.Data.Sci_uw_Inst.Tech.png"/>--></span></div>
         <div  style="width: 100%;text-align: right"><a href="#" class="systemLinks">My Account</a> <a href="#" class="systemLinks">Log Out</a></div>
         <br/>
         <div style="height:100%">
