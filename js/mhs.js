@@ -50,7 +50,7 @@ $(document).ready(function() {
     $('#options').click(function(event) {
         event.stopPropagation();
     });
-
+    updateVisualizationField($("#chooseField"));
 });
 function toggleOptions()
 {

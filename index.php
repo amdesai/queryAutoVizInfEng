@@ -41,7 +41,7 @@ include_once 'db_config.php';
             <div id="leftColumn">
                 <div id="fieldInfo">
                     <p>Visualization Field:</p>
-                    <input id="fieldTextBox" type="text" disabled="disabled" value="Gender"></input>
+                    <input id="fieldTextBox" type="text" disabled="disabled" value=""></input>
                     <a id="editField">Change</a>
                 </div>  
                 <div id="fieldList">
