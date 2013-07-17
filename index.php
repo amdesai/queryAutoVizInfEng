@@ -58,9 +58,9 @@ include_once 'db_config.php';
                         ?>
                         <?php foreach ($tablesSchema as $row): ?>
                             <?php
-                            if ($row['ORDINAL_POSITION'] == 1) {
-                                continue;
-                            }
+//                            if ($row['ORDINAL_POSITION'] == 1) {
+//                                continue;
+//                            }
                             $oldTable = $currentTable;
                             $currentTable = $row['TABLE_NAME'];
                             $title = "<div>" . $oldTable . "</div>";
@@ -165,7 +165,7 @@ include_once 'db_config.php';
                 <td>
                     <select id="chooseField" name="chooseField" onchange="updateVisualizationField(this)" >
                         <?php
-                        $strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='medical';";
+                        $strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='$DBName';";
                         $result = execute($strSQL);
                         ?>
                         <?php foreach ($result as $row):
