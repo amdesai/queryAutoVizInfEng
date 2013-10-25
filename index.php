@@ -34,7 +34,7 @@ include_once 'db_config.php';
     </head>
 
     <body height="100%">
-        <div><span><!-- <img src="img/logo_multicare.jpg"/> -->QUERY BUILDER LOGO</span>
+        <div><span style="font-size:120%"><!-- <img src="img/logo_multicare.jpg"/> -->EDUCATIONAL DATA | QUERY BUILDER</span>
         &nbsp;
         <span style="position: absolute;right: 10px"><!--<img src="img/Ctr.Web.Data.Sci_uw_Inst.Tech.png"/>--></span></div>
         <div  style="width: 100%;text-align: right"><a href="#" class="systemLinks">My Account</a> <a href="#" class="systemLinks">Log Out</a></div>
@@ -42,10 +42,15 @@ include_once 'db_config.php';
         <div style="height:100%">
             <div id="leftColumn">
                 <div id="fieldInfo">
-                    <p>Visualization Field:</p>
+                    <span>Visualization Options:</span>
+                    <p>Field:</p>
                     <input id="fieldTextBox" type="text" disabled="disabled" value=""></input>
-                    <a id="editField">Change</a>
-                </div>  
+                    <p>Type:</p>
+                    <input id="typeTextBox" type="text" disabled="disabled" value=""></input>
+                    <br></br>
+                    <button id="editField" style="font-size:110%">Change</button>
+                    <br></br>
+                    </div>  
                 <div id="fieldList">
                     <?php
                     $tablesSchema = execute("select * from information_schema.columns where table_schema = '$DBName' order by table_name,ordinal_position");
@@ -123,17 +128,19 @@ include_once 'db_config.php';
                         <li><a href="#tabs-3">Display Models</a></li>
                         <li><a href="#tabs-3">Visualize</a></li>
                     </ul>
-                    <div id="tabs-1">
-                        <div id="dropContainer" style="width: 40%" class="dashed container">
-                            <div class="label">Drag Fields Here</div>
-                            <ul id="drop">
 
-                            </ul>
-                        </div> 
-                        <div id="stats" style="width: 50%" class="dashed stats">
-                            <div style="clear: both"></div>
+                    	<div id="tabs-1">
+	                        <div id="dropContainer" style="width: 40%" class="dashed container">
+	                            <div class="label">Drag Fields Here</div>
+	                            <ul id="drop">
+	                            </ul>
+	                        </div>
+	                        
+	                        <div id="stats" style="width: 50%" class="dashed stats">
+	                            <div style="clear: both">
+	                            </div>
+	                        </div>
 
-                        </div>
                         <div id="tabs-2">
 
                         </div>
@@ -171,7 +178,7 @@ include_once 'db_config.php';
                         $result = execute($strSQL);
                         ?>
                         <?php foreach ($result as $row):
-                        if ($row["COLUMN_NAME"] == 'Gender') {
+                        if ($row["COLUMN_NAME"] == 'MathPercentLevel4') {
                             ?>
                             <option value = <?php echo $row["COLUMN_NAME"] ?> selected="selected"> <?php echo $row["COLUMN_NAME"] ?> </option>
                             <?php
@@ -190,10 +197,11 @@ include_once 'db_config.php';
             </tr>
             <tr>
                 <td>
-                    <select>
+                    <select id="chooseType" name="chooseType" onchange="updateVisualizationType(this)">
                         <option>Pie Chart</option>
-                        <option>Bar Chart</option>
-                    </select>
+                        <option selected>Bar Chart</option>
+                        <option>Map</option>
+                        </select>
                 </td>
             </tr>
 
