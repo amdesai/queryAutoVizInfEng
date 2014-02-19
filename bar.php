@@ -1,26 +1,25 @@
 <div id="chart"></div>
-<div id="bars"></div>
-
 <style>
     .fig {
       font-family:Arial;
-      font-size:10pt;
+      font-size:9pt;
       color:darkgray;
     }
 </style>
 <script type="text/javascript">
-    de = [{'count': 728, 'name': 'sample0'}, {'count': 824, 'name': 'sample1'}, {'count': 963, 'name': 'sample2'}, {'count': 927, 'name': 'sample3'}];
-    //[{'data':'16.7','value':1},{'data':'36.4','value':2},{'data':'75.0','value':1},{'data':'NA','value':28}]
 	
 	var data  = <?php echo $data; ?>;
+
+	var count = <?php echo $count; ?>;
 	
     var mySVG = d3.select("#chart")
       .append("svg")
-      .attr("width", 300) 
-      .attr("height", 600)
-      .style('position','absolute')
+//      .attr("viewBox", "0 0 500 500");
+      .attr("width", 30 * count) 
+      .attr("height", 650)
+      .style('position','center')
       .style('top',50)
-      .style('left',10)
+      .style('left',0)
       .attr('class','fig');
 
     var heightScale = d3.scale.linear()
@@ -32,7 +31,7 @@
       .enter().append("svg:text")
       .attr("x", function(d,i) {return 113 + (i * 22);})
       .attr("y", 435)
-      .attr("text-anchor", "middle") 
+      .attr("text-anchor", "end") 
       .text(function(d,i) {return d.data;})
       .attr('transform',function(d,i) {return 'rotate(-90,' + (113 + (i * 22)) + ',435)';}); 
 
@@ -49,7 +48,7 @@
       .enter().append("svg:line")
       .attr('x1','90')
       .attr('y1',function(d) {return 400 - heightScale(d);})
-      .attr('x2',320)
+      .attr('x2',((28 * count) - 60))
       .attr('y2',function(d) {return 400 - heightScale(d);})
       .style('stroke','lightgray'); 
 

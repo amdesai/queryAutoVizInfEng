@@ -83,7 +83,7 @@ dark #005BE0 old #A3A3A3
     border: 1px dashed #CCCCCC;
     float: left;
     margin-left: 10px;
-    min-height:70%
+    min-height:80%
 }
 #drop{
     min-height:90%;
@@ -112,7 +112,7 @@ dark #005BE0 old #A3A3A3
     bottom: 0;
     right: 0;
     z-index: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-size: 16pt;
     color:#B5B5B5;
     text-align: center;
@@ -126,7 +126,7 @@ dark #005BE0 old #A3A3A3
     color: #005BE0;
 }
 #tabs{
-    height: 80%;
+    height: 90%;
 }
 #drop li{
     margin-bottom: 5px;
@@ -187,9 +187,11 @@ dark #005BE0 old #A3A3A3
 }
 
 #chart{
-    padding-top: 10px;
-    padding-left: 20%;
+    padding-top: 20px;
+	overflow-x: auto;
+	margin-right: 40px;
 }
+
 .labelSmall{
     font-size: 10pt;
 }
@@ -247,7 +249,7 @@ hr.panelbreak {
     text-decoration: none;
 }
 #fieldTextBox {
-    margin-bottom: 2em;
+/*     margin-bottom: 2em; */
 }
 .slide {
     position: relative;
@@ -299,3 +301,10 @@ hr.panelbreak {
 #editField:hover{
     text-decoration: underline;
 }
+
+.gm-style {
+	color:red;
+	border: solid blue 5px;
+}
+
+

@@ -10,6 +10,8 @@ var minHeight;                  // This is the min height the drop area can have
 var tableArray = new Array();
 var tableCount = new Array();
 var joinField;
+var groupByfield;
+var selected_field;
 
 function dndObject(value, fieldNumber)
 {
@@ -46,12 +48,16 @@ $(document).ready(function() {
         if($("#options").is(":visible"))
             $("#options").hide('slide', {direction: 'right'}, 1000);
     });
+    
+    //TODO: here add an click event on body to make groupBy disappear nicely
 
     $('#options').click(function(event) {
         event.stopPropagation();
     });
     updateVisualizationField($("#chooseField"));
+    initVisualizationType();
 });
+
 function toggleOptions()
 {
     $("#options").toggle('slide', {direction: 'right'}, 1000);
@@ -70,6 +76,7 @@ function loadjQueryHandlerNew() {
             var remove = "<button class='remove' name='" + name + "|remove'></button></span>";
             // var selectedOption = "<span id='selectedOption'>Muaz</span>" 
             var title = "<div style='width:100%'>" + title + collapse + remove + "</div>";
+            console.log(title);
             var tmp = name.split("~");
             addTable(tmp[tableIndex]); //This function will check if field dropped is from a different table or existing tables
             var index = tmp[headIndex];
@@ -158,7 +165,7 @@ $(".remove").live("click", function() {
         return;
     }
     else {
-        addStats(str, index); //Update stats after removing if not last field removed
+        checkGroupBy(str, index); //Update stats after removing if not last field removed
     }
 });
 
@@ -182,14 +189,25 @@ $(".options li").live("click", function() {
     $(this).siblings().removeClass("selected");
     $(this).addClass("selected");
     var name = $(this).attr("name");
+//    globName = name;
     var tmp = name.split("~");
     var index = tmp[headIndex];
     var liName = extractLiName(tmp);
-    var str = $(this).html();
-    addStats(str, index); //String to be found Index from which to be found 
+    var str = $(this).html(); //String to be found Index from which to be found
+//    checkGroupBy(str, index);
+//    alert(groupByfield);
+    addStats(str, index);
     var button = $("#drop li[name='" + liName + "']").find(".collapse"); //Get the Collapse button of this field 
     showHideOptions($(this).siblings(), button);
 });
+
+
+//$("dropdown_selector').change(function() {
+//    var option = $(this).find('option:selected');
+//});
+//$('#chooseGroupByField').find(":selected").text()
+
+
 /**
  *
  *  This function will keep a track of all the tables for which a field has been dropped  
@@ -306,6 +324,21 @@ function updateVisualizationField(t) {
     $("#fieldTextBox").val($(t).val());
 }
 
+function updateVisualizationType(t) {
+    $("#typeTextBox").val($(t).val());
+}
+
+// just default to Bar Chart initially
+//it will be changed anyways by the inference engine later on.
+function initVisualizationType() {
+    $("#typeTextBox").val("Bar Chart");
+}
+
+function updateGroupByField(t) {
+	groupByfield = $("#chooseGroupByField option:selected" ).attr("value");
+	addStatsRev(null, null, groupByfield);
+}
+
 function drawChart() {
     var w = 300, //width
             h = 300, //height
@@ -368,41 +401,118 @@ function drawChart() {
 }
 
 
-function addStats(str, index) {
-    $("#stats").html("<div style='text-align: center;vertical-align: middle;padding-top: 100px' ><img src='img/285.gif' alt='Loading...'/></div>");
-    var selected = "&name=";
-    $(".selected").each(function(i, t) {
-        selected += $(t).attr("name");
-        if (i != $(".selected").length - 1)
-            selected += "|";
-    });
-    //console.log(selected);
-    $.ajax({
-        type: "POST",
-        url: "db_calls.php",
-        data: "task=generateStatistics&chooseField=" + $("#fieldTextBox").val() + selected + "&joinField=" + joinField
-    }).done(function(response) {
-        //alert(response);
-        $("#stats").html(response);
-    });
+//function addStats(str, index, groupByField) {
+//	$("#stats")
+//			.html(
+//					"<div style='text-align: center;vertical-align: middle;padding-top: 100px' ><img src='img/285.gif' alt='Loading...'/></div>");
+//	var selected = "&name=";
+//	$(".selected").each(function(i, t) {
+//		selected += $(t).attr("name");
+//		if (i != $(".selected").length - 1)
+//			selected += "|";
+//	});
+//	$.ajax(
+//			{
+//				type : "POST",
+//				url : "db_calls.php",
+//				data : "task=generateStatistics&chooseField="
+//						+ $("#fieldTextBox").val() + selected + "&chooseType="
+//						+ $("#typeTextBox").val() + selected + "&joinField="
+//						+ joinField + "&groupByField=" + groupByfield
+//			}).done(function(response) {
+//		// alert(response);
+//		$("#stats").html(response);
+//	});
+//}
 
-    /* alert(str);
-     alert(index);
-     var count = countOccurrences(str,index);
-     var html = "<div id='indvCount"+index+"'><b>"+index+"</b> "+str+" N = "+count+"</div>";
-     if($("#indvCount"+index).length>0)
-     {
-     $("#indvCount"+index).html(html); 
-     replaceCondition(str,index)
-     }else{
-     $("#indvCount").append(html);
-     conditionArray.push(new dndObject(str,index));
-     }
-     //countCommonOccurrences(); 
-     $("#chart").html("<p>Male/Female Ratio</p>");
-     drawChart();*/
+function addStatsRev(str, index, groupByField) {
+	$("#stats")
+	.html(
+			"<div style='text-align: center;vertical-align: middle;padding-top: 100px' >" +
+			"<img src='img/285.gif' alt='Loading...'/>" +
+			"</div>");
+	var selected = "&name=";
+	$(".selected").each(function(i, t) {
+	selected += $(t).attr("name");
+	if (i != $(".selected").length - 1)
+		selected += "|";
+	});
+	selected_field = selected;
+
+	var selected = selected_field;
+	$.ajax(
+			{
+				type : "POST",
+				url : "db_calls.php",
+				data : "task=generateStatistics&chooseField="
+						+ $("#fieldTextBox").val() + selected + "&chooseType="
+						+ $("#typeTextBox").val() + selected + "&joinField="
+						+ joinField + "&groupByField=" + groupByField
+			}).done(function(response) {
+		// alert(response);
+		$("#stats").html(response);
+	});
 }
-/*********************************************************************************/
+
+function addStats(str, index) {
+	$("#stats")
+	.html(
+			"<div style='text-align: center;vertical-align: middle;padding-top: 100px' >" +
+			"<img src='img/285.gif' alt='Loading...'/>" +
+			"</div>");
+	var selected = "&name=";
+	$(".selected").each(function(i, t) {
+	selected += $(t).attr("name");
+	if (i != $(".selected").length - 1)
+		selected += "|";
+	});
+	selected_field = selected;
+
+	var selected = selected_field;
+	$.ajax(
+			{
+				type : "POST",
+				url : "db_calls.php",
+				data : "task=generateStatistics&chooseField="
+						+ $("#fieldTextBox").val() + selected + "&chooseType="
+						+ $("#typeTextBox").val() + selected + "&joinField="
+						+ joinField
+			}).done(function(response) {
+		// alert(response);
+		$("#stats").html(response);
+	});
+}
+
+
+function checkGroupBy(str, index) {
+	$("#stats")
+			.html(
+					"<div style='text-align: center;vertical-align: middle;padding-top: 100px' >" +
+					"<img src='img/285.gif' alt='Loading...'/>" +
+					"</div>");
+	var selected = "&name=";
+	$(".selected").each(function(i, t) {
+		selected += $(t).attr("name");
+		if (i != $(".selected").length - 1)
+			selected += "|";
+	});
+	selected_field = selected;
+	$.ajax(
+			{
+				type : "POST",
+				url : "db_calls.php",
+				data : "task=checkAggregationGenerateStats&chooseField="
+						+ $("#fieldTextBox").val() + selected + "&chooseType="
+						+ $("#typeTextBox").val() + selected + "&joinField="
+						+ joinField
+			}).done(function(response) {
+				$("#stats").html(response);
+				
+	});
+}
+
+
+/** ****************************************************************************** */
 /* 
  * The following functions are for demo purpose only, They should eventualy be
  *  replacted with Ajax calls for SQL querying

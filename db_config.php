@@ -1,7 +1,7 @@
 <?php
 	ob_start();
 	$DBLink = "localhost";
-	$DBName = "ospi";
+	$DBName = "ospi_final";
 	$DBUser = "root";
 	$DBPswd = "roar77";
 	$col = "";

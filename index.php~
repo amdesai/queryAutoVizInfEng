@@ -1,11 +1,11 @@
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
 include_once 'db_config.php';
 ?>
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>MHS Query Builder</title>
+        <title>Generic Query Builder</title>
         <link rel="shortcut icon" href="../favicon.ico" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.9.2.custom.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/mhs.css"/>
@@ -13,6 +13,7 @@ include_once 'db_config.php';
         <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
         <script type="text/javascript" src="js/mhs.js"></script>
         <script type="text/javascript" src="js/d3.v3.min.js"></script>
+	<script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/tableau_v8.js"></script>
         <script>
             $(function() {
                 //                $("#dialog").dialog({
@@ -34,15 +35,17 @@ include_once 'db_config.php';
     </head>
 
     <body height="100%">
-        <div><span><img src="img/logo_multicare.jpg"/></span>&nbsp;<span style="position: absolute;right: 10px"><img src="img/Ctr.Web.Data.Sci_uw_Inst.Tech.png"/></span></div>
+        <div><span><!-- <img src="img/logo_multicare.jpg"/> -->QUERY BUILDER LOGO</span>
+        &nbsp;
+        <span style="position: absolute;right: 10px"><!--<img src="img/Ctr.Web.Data.Sci_uw_Inst.Tech.png"/>--></span></div>
         <div  style="width: 100%;text-align: right"><a href="#" class="systemLinks">My Account</a> <a href="#" class="systemLinks">Log Out</a></div>
         <br/>
         <div style="height:100%">
             <div id="leftColumn">
                 <div id="fieldInfo">
-                    <p>Field:</p>
-                    <input id="fieldTextBox" type="text" disabled="disabled" value="Gender"></input>
-                    <a id="editField">edit</a>
+                    <p>Visualization Field:</p>
+                    <input id="fieldTextBox" type="text" disabled="disabled" value=""></input>
+                    <a id="editField">Change</a>
                 </div>  
                 <div id="fieldList">
                     <?php
@@ -58,9 +61,9 @@ include_once 'db_config.php';
                         ?>
                         <?php foreach ($tablesSchema as $row): ?>
                             <?php
-                            if ($row['ORDINAL_POSITION'] == 1) {
-                                continue;
-                            }
+//                            if ($row['ORDINAL_POSITION'] == 1) {
+//                                continue;
+//                            }
                             $oldTable = $currentTable;
                             $currentTable = $row['TABLE_NAME'];
                             $title = "<div>" . $oldTable . "</div>";
@@ -112,7 +115,6 @@ include_once 'db_config.php';
 
             </div>
             <div id="rightContent">
-
                 <div id="tabs">
                     <ul>
                         <li><a href="#tabs-1">Segment Generation</a></li>
@@ -122,16 +124,56 @@ include_once 'db_config.php';
                         <li><a href="#tabs-3">Visualize</a></li>
                     </ul>
                     <div id="tabs-1">
+
+                        <!--<div id="test_tabl" style="width: 100%" class="dashed stats"></div>-->
+
                         <div id="dropContainer" style="width: 40%" class="dashed container">
                             <div class="label">Drag Fields Here</div>
                             <ul id="drop">
-
                             </ul>
                         </div> 
-                        <div id="stats" style="width: 50%" class="dashed stats">
+                        <div id="stats" style="align: right; width: 50%" class="dashed stats">
                             <div style="clear: both"></div>
 
                         </div>
+
+			<!--<script>
+				var vizDiv = document.getElementById('test_tabl');
+				var vizURL = 'http://public.tableausoftware.com/views/wasl_scores_bydist_bysubgrp/dash_1';
+				var options = {
+					width:'950px',
+					height:'750px'
+				};
+				viz = new tableauSoftware.Viz(vizDiv, vizURL, options);
+
+			</script>-->
+			
+			<script>
+			    var map = new Datamap({
+        			element: document.getElementById('container'),
+        			fills: {
+				    HIGH: '#afafaf',
+				    LOW: '#123456',
+				    MEDIUM: 'blue',
+				    UNKNOWN: 'rgb(0,0,0)',
+				    defaultFill: 'green'
+				},
+				data: {
+				    IRL: {
+					fillKey: 'LOW',
+					numberOfThings: 2002
+				    },
+				    USA: {
+					fillKey: 'MEDIUM',
+					numberOfThings: 10381
+				    }
+				}
+			    });
+
+			    //draw a legend for this map
+			    map.legend();
+			</script>
+
                         <div id="tabs-2">
 
                         </div>
@@ -165,7 +207,7 @@ include_once 'db_config.php';
                 <td>
                     <select id="chooseField" name="chooseField" onchange="updateVisualizationField(this)" >
                         <?php
-                        $strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='medical';";
+                        $strSQL = "SELECT DISTINCT(COLUMN_NAME) FROM INFORMATION_SCHEMA.`COLUMNS` WHERE table_schema='$DBName';";
                         $result = execute($strSQL);
                         ?>
                         <?php foreach ($result as $row):
