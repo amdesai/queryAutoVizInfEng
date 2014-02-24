@@ -4,6 +4,8 @@ $count = sizeof($result);
 $data = "";
 $aggregator_field = null;
 
+$isGeographical = true;
+
 if ($groupByMode) {
 	$aggregator_field = $groupByField;
 } else {
@@ -12,9 +14,12 @@ if ($groupByMode) {
 
 if ($isCategorical && $count <= 15) {
 	$chooseType = "Pie Chart";
+} else if ($isGeographical){
+	$chooseType = "Map";
 } else {
 	$chooseType = "Bar Chart";
 }
+
 if ($chooseType=="Bar Chart") {
 		foreach ($result as $index => $row) {
 			$data .= '{\'data\':\'' . $row[$aggregator_field] . '\',\'value\':' . $row["value"] . '}';
@@ -46,5 +51,6 @@ if ($chooseType=="Map") {
 	echo "<div id='matchCount'><div><b>Number of Results</b> N = $count </div></div>";
 	echo "<div><p>Inference Engine selected <b>Map</b> Visualization for this Query!</p></div>";
 	echo "<p>Map Viz Goes Here!</p>";
+	include_once 'map.php';
 }
 ?>

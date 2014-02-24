@@ -76,31 +76,40 @@ if ($task == "getUniqueFieldValues") {
 	
 	include_once 'query_creator.php';
 	
-	///////////////////////////
+	//////////////////////////////////////
 	// Basic Rule-Based Inference Algo: //
-	///////////////////////////
+	//////////////////////////////////////
 
-	// if chooseField is categorical
-		// if # of results after group by chooseField > 15
-			// pie chart
-		// else 
-			// bar chart
+// 		if Visualization Field is Categorical:
+// 			if field is geo-spatial
+// 					generate a map
+// 			else
+// 				if number of results after group by chooseField <= 15
+// 					generate a pie chart
+// 				else
+// 					generate a bar chart
+			
+// 		else // Visualization Field is Numeric
+// 			infer select the optimal method of aggregating data:
+// 			if a categorical field with the least missing values (i.e. most populated field) is identified by inference engine
+// 				group-by field is auto selected and used to generate visualization
+// 			else
+// 				discretize the data in the visualization field into ten intervals while allowing the user to change the number of intervals, and use intervals for aggregating data
+		
+// 			if group-by field is not "acceptable" to user
+// 				allow user to select a different categorical "group by" field
+				 
+// 			Use auto-selected or user-selected aggregation field or discretization intervals to compute the averages of numeric data in each group and use following rules to select the appropriate visualization type:
+// 			if group-by field is geographic
+// 				generate a map
+// 			else
+// 				if number of results after group by chooseField <= 15
+// 					generate a pie chart
+// 				else
+// 					generate a bar chart
+			
+// 		The algorithm can be extended with more types of visualizations at this point based on a more rules designed to handle a wider range of scenarios for which to choose appropriate visualizations types.
 	
-	// else (chooseField is numerical)
-		// we need an X-axis
-		// group-by field is auto selected - pick a categorical field with
-		// the least missing values - or - most populated field (sub-routine)
-		// If group-by field is not "acceptable" to user, let user select a different "group by" field
-		
-		// with a group-by field selected (auto or user-selected) invoke @author aniruddha
-		// sub-routine to generate viz using the "avg" values for ea group as follows:
-		
-		// sub-routine: generate viz using "avg" values for each group
-			// if group-by field is geographic - generate a map
-			// else generate a bar chart
-			// the algorithm can be extended with more types of visualizations at this point
-			// based on a more rules to infer which scenarios additional visualizations are
-			// better suited for.
 	
 	if (isNumerical($table, $queryFrom, $queryWhere, $chooseField)) {
 		echo "<p>Infered Visualization Field Type: <b>Numerical</b></p>";
@@ -112,6 +121,8 @@ if ($task == "getUniqueFieldValues") {
 		if (is_null($groupByField)) {
 			$groupByField = selectGroupByField($table, $chooseField, $queryFrom, $queryWhere, $field, $value);
 		}
+// 		unset($groupByField);
+// 		$groupByMode = false;
 	} else {
 		echo "<p>Infered Visualization Field Type: <b>Categorical</b></p>";
 		$isCategorical = true;
@@ -128,11 +139,11 @@ if ($task == "getUniqueFieldValues") {
 		$aggregateQuery = "SELECT temp.$groupByField, avg(temp.$chooseField) as value " .
 			"FROM (SELECT * FROM $queryFrom WHERE $queryWhere) AS temp " .
 			"GROUP BY temp.$groupByField";
-		//	echo "<p>AGGR QUERY: <br />".$aggregateQuery."</p>"; // for debugging
+			echo "<p>AGGR QUERY: <br />".$aggregateQuery."</p>"; // for debugging
 		$result = execute($aggregateQuery);
 		$groupByMode = true;
 	} else {
-		//	echo "<p>MAIN QUERY: <br />".$mainQuery."</p>"; // for debugging
+		echo "<p>MAIN QUERY: <br />".$mainQuery."</p>"; // for debugging
 		$result = execute($mainQuery);
 		$groupByMode = false;
 	}
